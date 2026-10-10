@@ -36,6 +36,8 @@ hadoop fs -put -f orders_2026_09.csv /user/student/ecommerce/input/
 
 HDFS chạy chế độ pseudo-distributed (1 NameNode + 1 DataNode); `jps` hiển thị `NameNode`, `DataNode`, và `hdfs dfsadmin -report` báo `Live datanodes (1)`.
 Log đầy đủ: [`logs/00_hdfs_evidence.txt`](logs/00_hdfs_evidence.txt), [`logs/03_format.txt`](logs/03_format.txt).
+<img width="1285" height="396" alt="Ảnh màn hình 2026-10-10 lúc 17 42 30" src="https://github.com/user-attachments/assets/e9a0afad-246c-4922-9f4b-4c11ab3c009a" />
+
 
 ## 4. Minh chứng 02 – Xem dữ liệu trên HDFS
 
@@ -51,6 +53,7 @@ TX000002,2026-09-23,23:58:00,Da Nang,Grocery,mobile,1,265514,265514,SUCCESS,3
 TX000003,2026-09-05,15:38:00,Ha Noi,Electronics,partner,1,12741238,12741238,SUCCESS,3
 TX000004,2026-09-09,18:01:00,Hai Phong,Electronics,mobile,1,8846997,8846997,SUCCESS,4
 ```
+<img width="1292" height="574" alt="Ảnh màn hình 2026-10-10 lúc 17 43 25" src="https://github.com/user-attachments/assets/c7edcdf7-4dbb-4dc9-be91-171c16d323b8" />
 
 ## 5. Chạy job MapReduce (Hadoop Streaming) trên HDFS
 
