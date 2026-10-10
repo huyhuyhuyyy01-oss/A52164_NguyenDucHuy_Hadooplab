@@ -1,0 +1,99 @@
+##### MINH CHỨNG 01 – Khởi động HDFS (jps, dfsadmin -report)
+Format NameNode: OK
+Safe mode is OFF
+
+=== jps ===
+4226 NameNode
+4534 Jps
+4301 DataNode
+
+=== hdfs dfsadmin -report (rut gon) ===
+Configured Capacity: 120942624768 (112.64 GB)
+DFS Used: 24576 (24 KB)
+Live datanodes (1):
+Configured Capacity: 120942624768 (112.64 GB)
+
+
+##### MINH CHỨNG 01 – Tạo thư mục HDFS và upload dữ liệu (hadoop fs -mkdir/-put/-ls/-head)
+=== hadoop fs -ls /user/student/ecommerce/input ===
+Found 1 items
+-rw-r--r--   1 root supergroup     121497 2026-10-10 09:43 /user/student/ecommerce/input/orders_2026_09.csv
+
+=== hadoop fs -head ... (5 dong dau) ===
+transaction_id,order_date,order_time,province,category,channel,quantity,unit_price,amount,status,shipping_days
+TX000001,2026-09-30,02:25:00,Ha Noi,Beauty,web,1,294947,294947,SUCCESS,2
+TX000002,2026-09-23,23:58:00,Da Nang,Grocery,mobile,1,265514,265514,SUCCESS,3
+TX000003,2026-09-05,15:38:00,Ha Noi,Electronics,partner,1,12741238,12741238,SUCCESS,3
+TX000004,2026-09-09,18:01:00,Hai Phong,Electronics,mobile,1,8846997,8846997,SUCCESS,4
+
+
+##### MINH CHỨNG 02 – Kết quả trên HDFS (hadoop fs -ls / -cat) và Top 3
+=== hadoop fs -ls output ===
+Found 2 items
+-rw-r--r--   1 root supergroup          0 2026-10-10 09:44 /user/student/ecommerce/output/revenue_by_category/_SUCCESS
+-rw-r--r--   1 root supergroup        133 2026-10-10 09:44 /user/student/ecommerce/output/revenue_by_category/part-00000
+
+=== hadoop fs -cat output/part-* ===
+Beauty	111032003
+Book	39306022
+Electronics	3703769311
+Fashion	218597763
+Grocery	80983147
+Home	410315065
+Sport	166194354
+Toy	83881779
+
+=== TOP 3 ===
+Electronics	3703769311
+Home	410315065
+Fashion	218597763
+
+
+##### ĐỐI CHIẾU local vs HDFS
+✅ GIONG NHAU – local va HDFS cho cung ket qua
+
+
+##### YARN (jps, yarn node -list, yarn application -list)
+=== jps ===
+4226 NameNode
+5351 ResourceManager
+5866 Jps
+5419 NodeManager
+4301 DataNode
+
+=== yarn node -list ===
+2026-10-10 09:44:50,460 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at localhost/127.0.0.1:8032
+Total Nodes:1
+         Node-Id	     Node-State	Node-Http-Address	Number-of-Running-Containers
+cc818b37241c:35091	        RUNNING	cc818b37241c:8042	                           0
+		Peak Map Virtual memory (bytes)=2746003456
+		Peak Reduce Physical memory (bytes)=188989440
+		Peak Reduce Virtual memory (bytes)=2749632512
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=125593
+	File Output Format Counters 
+		Bytes Written=130
+2026-10-10 09:45:29,808 INFO streaming.StreamJob: Output directory: /user/student/ecommerce/output/revenue_by_category_yarn
+
+=== yarn application -list -appStates ALL ===
+2026-10-10 09:45:31,462 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at localhost/127.0.0.1:8032
+Total number of applications (application-types: [], states: [NEW, NEW_SAVING, SUBMITTED, ACCEPTED, RUNNING, FINISHED, FAILED, KILLED] and tags: []):1
+                Application-Id	    Application-Name	    Application-Type	      User	     Queue	             State	       Final-State	       Progress	                       Tracking-URL
+application_1791625467208_0001	streamjob589510440251489568.jar	           MAPREDUCE	      root	root.default	          FINISHED	         SUCCEEDED	           100%	http://cc818b37241c:19888/jobhistory/job/job_1791625467208_0001
+
+=== Ket qua chay tren YARN ===
+Beauty	65963830
+Book	18000470
+Electronics	2058149058
+Fashion	98771196
+Grocery	41912123
+Home	218367449
+Sport	80872488
+Toy	41076673
